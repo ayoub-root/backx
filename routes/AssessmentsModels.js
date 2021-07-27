@@ -1,9 +1,9 @@
 var express = require('express');
 var AccountsSchema= require('../models/Accounts');
 var router = express.Router();
-const EvaluationsSchema = require("../models/Evaluations");
-const AssessmentsModelsSchema = require("../models/Assessments");
-const Patients = require('../models/Patients');
+
+const AssessmentsModelsSchema = require("../models/AssessmentsModels");
+
 
 router.post("/id", async (req, res) => {
   console.log(req.body.id)
@@ -66,7 +66,7 @@ router.post('/register', async function (req, res, next) {
 //console.log(req.body.zone)
 
 const account= await AccountsSchema.findById(req.body.creator);
-console.log(req.body.blocks)
+console.log(req.body.ListBlocks)
   const assessment = new AssessmentsModelsSchema(
     {
       //patient_id: await PatientsSchema.findById(req.body.patient_id),
@@ -83,7 +83,8 @@ console.log(req.body.blocks)
       documentation: req.body.documentation,
       audience: req.body.audience,
       state:req.body.state,
-      blocks:req.body.blocks,
+      valid:req.body.valid,
+      ListBlocks:req.body.ListBlocks,
       created_at: Date(),
       updated_at: Date(),
     });
@@ -124,7 +125,8 @@ router.post("/update", async (req, res) => {
       documentation: req.body.documentation,
       audience: req.body.audience,
       state:req.body.state,
-      blocks:req.body.blocks,
+      valid:req.body.valid,
+      ListBlocks:req.body.ListBlocks,
 
 
      },

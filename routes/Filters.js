@@ -27,7 +27,7 @@ router.post('/register', async function (req, res, next) {
             creator: await AccountsSchema.findById(req.body.creator),
             title: req.body.title,
             description:req.body.description,
-            fieled:req.body.fieled,
+            field:req.body.field,
             type:req.body.type,
             value:req.body.value,
             created_at: Date(),
@@ -41,7 +41,7 @@ router.post('/register', async function (req, res, next) {
 });
 router.post("/removefilter", async (req, res) => {
     //  console.log(req.body.item_id, req.body.creator)
-      await FiltersSchema.deleteOne({ creator: req.body.creator,_id:req.body.filter_id },).exec(async function(err, result) {
+      await FiltersSchema.deleteOne({ creator: req.body.creator,_id:req.body.id },).exec(async function(err, result) {
         if (err) throw err;
         await FiltersSchema.find().exec(function (err, result) {
           if (err) throw err;

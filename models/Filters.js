@@ -8,10 +8,11 @@ var FiltersSchema = new Schema(
 //evaluation:{type:mongoose.Schema.Types.ObjectId, ref:'evaluations'},
 creator:{type:mongoose.Schema.Types.ObjectId, ref:'accounts'},
 title:{type:String,required:true},
-fieled:{type:String,required:true},
+field:{type:String,required:true}, // for the application services ['healthcare', 'elarning','research','fitness',]
 type:{type:String,required:true},
 value:{type:Array},
 option:{type:Array},
+state:{type:String,default:'active'},
 description:{type:String},
 created_at:{type: Date, required: true},
 updated_at:{type: Date, required: true},

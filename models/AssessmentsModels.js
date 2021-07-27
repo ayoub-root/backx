@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Blocks = require('./Blocks');
-const Evaluations = require('./Evaluations');
 
 const Schema = mongoose.Schema;
 // oijoijoi //#endregion
@@ -23,7 +22,8 @@ description:{type:String,default: undefined}, // breif description for the creat
 documentation:{type:String,default: undefined}, // link or text of the official documentation 
 audience:{type:Array}, // visibilty of each assessment ['private','organisation','public', 'specfic user']
 state:{type:String,default:'active'}, // states :['active','archive','trash', 'hidden']
-blocks:{type:[Blocks.schema],default: undefined}, // block list used to build the assessment (0...N)
+valid:{type:String, default:'user'}, // requires te be validated by the admin
+ListBlocks:{type:[Blocks.schema],default: undefined}, // block list used to build the assessment (0...N)
 filter:{type:Array}, // for advanced/future usage  [{filter1:{}};{filter2:{}}]
 logo:{type:String,default: undefined}, // logo of the assessment  
 background:{type:String,default: undefined},  // a background image  in case of page preview
@@ -47,4 +47,4 @@ AssessmentsModelsSchema
 });
 
 //Export model
-module.exports = mongoose.model('assessments', AssessmentsModelsSchema);
+module.exports = mongoose.model('assessmentsmodels', AssessmentsModelsSchema);

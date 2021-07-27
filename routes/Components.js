@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
   res.status(200).json(Item);
 });
 router.get("/all", async (req, res) => {
-  const Item = await ComponentsSchema.find().exec(function (err, result) {
+  const Item = await ComponentsSchema.find({state:'active'},).exec(function (err, result) {
     if (err) throw err;
     console.log(result);
     res.status(200).json({ result });
@@ -28,8 +28,9 @@ router.post('/register', async function (req, res, next) {
 
       creator: await AccountsSchema.findById(req.body.creator),
       title: req.body.title,
-      label: req.body.lable,
-      field: req.body.filed,
+      label: req.body.label,
+      field: req.body.field,
+      widget:req.body.widget,
       type: req.body.type,
       state: req.body.state,
       value:JSON.stringify(req.body.value),
@@ -48,11 +49,39 @@ router.post('/register', async function (req, res, next) {
 
 
 
-router.post("/removeitem", async (req, res) => {
-  //  console.log(req.body.item_id, req.body.creator)
-  await ComponentsSchema.deleteOne({ creator: req.body.creator, _id: req.body.item_id },).exec(async function (err, result) {
+
+
+
+router.post("/update", async (req, res) => {
+  /// console.log(req.body.assessment, req.body.id)
+  await ComponentsSchema.findByIdAndUpdate(
+    req.body.id,
+    {
+      title: req.body.title,
+      label: req.body.label,
+      field: req.body.field,
+      widget:req.body.widget,
+      type: req.body.type,
+      state: req.body.state,
+      value:req.body.value,
+      options:req.body.options,
+      documentation: req.body.documentation,
+      description: req.body.description,
+    },
+
+  ).exec(function (err, result) {
     if (err) throw err;
-    await ComponentsSchema.find().populate('account_id', '-password').populate('doctor', '-password').exec(function (err, result) {
+    console.log(result);
+    res.status(200).json({ result });
+  }
+  );
+});
+
+router.post("/remove", async (req, res) => {
+  //  console.log(req.body.item_id, req.body.creator)
+  await ComponentsSchema.deleteOne({ creator: req.body.creator, _id: req.body.id },).exec(async function (err, result) {
+    if (err) throw err;
+    await ComponentsSchema.find({state:'active'}).exec(function (err, result) {
       if (err) throw err;
       // console.log(result);
       res.status(200).json({ result });
@@ -63,21 +92,13 @@ router.post("/removeitem", async (req, res) => {
 });
 //////////
 
-
-router.post("/update", async (req, res) => {
+router.post("/updatestate", async (req, res) => {
   /// console.log(req.body.assessment, req.body.id)
   await ComponentsSchema.findByIdAndUpdate(
     req.body.id,
     {
-      title: req.body.title,
-      label: req.body.lable,
-      field: req.body.filed,
-      type: req.body.type,
-      state: req.body.state,
-      value:req.body.value,
-      options:req.body.options,
-      documentation: req.body.documentation,
-      description: req.body.description,
+      
+      state:req.body.state,
     },
 
   ).exec(function (err, result) {
