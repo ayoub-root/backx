@@ -5,7 +5,7 @@ var middleware = require('../middleware/middleware')
 const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcrypt');
 var AccountSchema = require('../models/Accounts');
-var PatientSchema = require('../models/Patients');
+var UserSchema = require('../models/Users');
 var ProfessionalSchema = require('../models/Professionals');
 //const session = require('express-session'); //we're using 'express-session' as 'session' here
 var shortid = require('shortid');
@@ -35,10 +35,10 @@ var storage = multer.diskStorage({
 })
 
 router.post("/id", async (req, res) => {
-  //console.log(req.body.id)
+  ////console.log(req.body.id)
   const account = await AccountSchema.findById(req.body.id, 'email code first_name last_name date_of_birth avatar role profession created_at', (err, result) => {
     if (err) throw err;
-    //console.log(result);
+    ////console.log(result);
     res.status(200).json({ result });
   }
   );
@@ -58,7 +58,7 @@ router.get("/", auth, async (req, res) => {
 router.get("/all", async (req, res) => {
   const account = await AccountSchema.find({}, 'email code sex first_name last_name date_of_birth avatar role profession created_at', (err, result) => {
     if (err) throw err;
-    //console.log(result);
+    ////console.log(result);
     res.status(200).json({ result });
   }
   );
@@ -74,7 +74,7 @@ const imageFilter = function (req, file, cb) {
 };
 
 router.post('/checkemail', async (req, res) => {
-  // console.log(req.body.account)
+  // //console.log(req.body.account)
   if (req.body.email!=undefined) {
     const account = await AccountSchema.findOne({ email:req.body.email  }, ' email');
     if (account) {
@@ -105,7 +105,7 @@ router.post('/register', async function (req, res, next) {
       const fileExtension = (file.originalname.match(/\.+[\S]+$/) || [])
 
       const newname = file.fieldname + '-' + uniqueid + fileExtension
-      // console.log(newname)
+      // //console.log(newname)
       cb(null, newname)
     }
   })
@@ -121,9 +121,10 @@ router.post('/register', async function (req, res, next) {
     }
 
     // Display uploaded image for user validation
-    console.log( req.body)
+    //console.log( req.body)
     const account = new AccountSchema(
-      {
+      { 
+        administrator:await  AccountSchema.findById(req.body.administrator),
         code: uniqueid,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 5),
@@ -153,6 +154,7 @@ router.post('/register', async function (req, res, next) {
               address:'' ,
               mobile:''  ,
               job:'' ,
+              administrator:await  AccountSchema.findById(state.administrator),
               adder:await  AccountSchema.findById(req.body.adder),
               description:'' ,
               is_active:false,
@@ -164,17 +166,18 @@ router.post('/register', async function (req, res, next) {
   await professional.save();
 
       } else if (req.body.role === "patient") {
-        const patient  = new PatientSchema(
+        console.log(state.administrator)
+        const user  = new UserSchema(
           {
              account_id:await  AccountSchema.findById(state._id), 
              information:'',
-             doctor:await  AccountSchema.findById(req.body.doctor),
+             administrator:await  AccountSchema.findById(state.administrator),
               is_active:false,
               activation_code:middleware.Unique_N_ID()+""+middleware.Unique_N_ID(),
               created_at:Date(),
               updated_at:Date(),
           });
-  await patient.save();
+  await user.save();
       }
     }
     if (req.body.creator === "admin") {
@@ -186,7 +189,7 @@ router.post('/register', async function (req, res, next) {
               address:'' ,
               mobile:''  ,
               job:'' ,
-              adder:await  AccountSchema.findById(req.body.adder),
+              administrator:await  AccountSchema.findById(state.administrator),
               description:'' ,
               is_active:false,
               added_by_admin:true,
@@ -209,7 +212,7 @@ router.post('/register', async function (req, res, next) {
               mobile:''  ,
               job:'' ,
               description:'' ,
-              adder:await  AccountSchema.findById(state._id),
+              administrator:await  AccountSchema.findById(state.administrator),
               is_active:false,
               added_by_admin:false,
               activation_code:middleware.Unique_N_ID()+""+middleware.Unique_N_ID(),
@@ -256,7 +259,7 @@ if(req.body.role === "healthpro"){
 })
 
 router.post('/existaccount', async (req, res) => {
-  // console.log(req.body.account)
+  // //console.log(req.body.account)
   if (!isNaN((req.body.account))) {
     const account = await AccountSchema.findOne({ code: parseInt(req.body.account) }, '_id email first_name last_name');
     if (!account) {
@@ -322,7 +325,7 @@ router.post("/tokenIsValidss", async (req, res) => {
 router.post("/tokenIsValid", async (req, res) => {
   try {
     const token = req.header("x-auth-token");
-    console.log(token)
+    //console.log(token)
     if (!token) return res.json(false);
 
     const verified = jwt.verify(JSON.parse(token), process.env.JWT_TOKEN);
@@ -389,15 +392,15 @@ router.post('/forgot', (req, res) => {
           try {
             transporter.sendMail(mailOptions, (error, response) => {
               if (error) {
-                console.log("error:\n", error, "\n");
+                //console.log("error:\n", error, "\n");
                 res.status(500).send("could not send reset code");
               } else {
-                console.log("email sent:\n", response);
+                //console.log("email sent:\n", response);
                 res.status(200).send("Reset Code sent");
               }
             });
           } catch (error) {
-            console.log(error);
+            //console.log(error);
             res.status(500).send("could not sent reset code");
           }
         }
@@ -454,10 +457,10 @@ router.get("/activation", function (req, rep, next) {
 
 
 router.post("/removeaccount", async (req, res) => {
-  console.log(req.body.account_id, req.body.creator)
+  //console.log(req.body.account_id, req.body.creator)
   await AccountSchema.deleteOne({ creator: req.body.creator,_id:req.body.account_id },).exec( function(err, result) {
     if (err) throw err;
-    //console.log(result);
+    ////console.log(result);
      res.status(200).json({result});
   }
   );

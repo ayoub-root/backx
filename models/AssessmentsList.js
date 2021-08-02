@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Blocks = require('./Blocks');
-const Evaluations = require('./Evaluations');
+
 
 const Schema = mongoose.Schema;
 
@@ -40,8 +40,8 @@ AssessmentsListsSchema
 AssessmentsListsSchema
 .virtual('url')
 .get(function () {
-  return '/assessementslists/' + this._id;
+  return '/assessementslist/' + this._id;
 });
 
 //Export model
-module.exports = mongoose.model('assessmentslists', AssessmentsListsSchema);
+module.exports = mongoose.model('assessmentslist', AssessmentsListsSchema);

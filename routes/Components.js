@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
 router.get("/all", async (req, res) => {
   const Item = await ComponentsSchema.find({state:'active'},).exec(function (err, result) {
     if (err) throw err;
-    console.log(result);
+    //console.log(result);
     res.status(200).json({ result });
   }
   );
@@ -22,7 +22,7 @@ router.get("/all", async (req, res) => {
 
 /*  Register new Acoount*/
 router.post('/register', async function (req, res, next) {
-  console.log(req.body.components)
+  //console.log(req.body.components)
   const Component = new ComponentsSchema(
     {
 
@@ -53,7 +53,7 @@ router.post('/register', async function (req, res, next) {
 
 
 router.post("/update", async (req, res) => {
-  /// console.log(req.body.assessment, req.body.id)
+  /// //console.log(req.body.assessment, req.body.id)
   await ComponentsSchema.findByIdAndUpdate(
     req.body.id,
     {
@@ -71,19 +71,19 @@ router.post("/update", async (req, res) => {
 
   ).exec(function (err, result) {
     if (err) throw err;
-    console.log(result);
+    //console.log(result);
     res.status(200).json({ result });
   }
   );
 });
 
 router.post("/remove", async (req, res) => {
-  //  console.log(req.body.item_id, req.body.creator)
+  //  //console.log(req.body.item_id, req.body.creator)
   await ComponentsSchema.deleteOne({ creator: req.body.creator, _id: req.body.id },).exec(async function (err, result) {
     if (err) throw err;
     await ComponentsSchema.find({state:'active'}).exec(function (err, result) {
       if (err) throw err;
-      // console.log(result);
+      // //console.log(result);
       res.status(200).json({ result });
     }
     );
@@ -93,7 +93,7 @@ router.post("/remove", async (req, res) => {
 //////////
 
 router.post("/updatestate", async (req, res) => {
-  /// console.log(req.body.assessment, req.body.id)
+  /// //console.log(req.body.assessment, req.body.id)
   await ComponentsSchema.findByIdAndUpdate(
     req.body.id,
     {
@@ -103,7 +103,7 @@ router.post("/updatestate", async (req, res) => {
 
   ).exec(function (err, result) {
     if (err) throw err;
-    console.log(result);
+  //  //console.log(result);
     res.status(200).json({ result });
   }
   );

@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
 router.get("/all", async (req, res) => {
   const block = await BlocksSchema.find().populate('account_id', '-password').populate('doctor', '-password').exec(function (err, result) {
     if (err) throw err;
-    // console.log(result);
+    // ////console.log(result);
     res.status(200).json({ result });
   }
   );
@@ -96,12 +96,12 @@ req.body.ListBlocks.map((data,index)=>{
 });
 
 router.post("/removeblock", async (req, res) => {
-  //  console.log(req.body.item_id, req.body.creator)
+  //  ////console.log(req.body.item_id, req.body.creator)
   await BlocksSchema.deleteOne({ creator: req.body.creator, _id: req.body.block_id },).exec(async function (err, result) {
     if (err) throw err;
     await BlocksSchema.find().populate('account_id', '-password').populate('doctor', '-password').exec(function (err, result) {
       if (err) throw err;
-      // console.log(result);
+      // ////console.log(result);
       res.status(200).json({ result });
     }
     );
@@ -113,7 +113,7 @@ router.post("/removeblock", async (req, res) => {
 
 
 router.post("/update", async (req, res) => {
-  console.log(req.body.assessment, req.body.id)
+  ////console.log(req.body.assessment, req.body.id)
   await BlocksSchema.findByIdAndUpdate(
     req.body.id,
     {
@@ -138,7 +138,7 @@ router.post("/update", async (req, res) => {
 
   ).exec(function (err, result) {
     if (err) throw err;
-    console.log(result);
+   // ////console.log(result);
     res.status(200).json({ result });
   }
   );
@@ -148,12 +148,12 @@ router.post("/update", async (req, res) => {
 
 
 router.post("/remove", async (req, res) => {
-  //  console.log(req.body.item_id, req.body.creator)
+  //  ////console.log(req.body.item_id, req.body.creator)
   await BlocksSchema.deleteOne({ creator: req.body.creator, _id: req.body.id },).exec(async function (err, result) {
     if (err) throw err;
     await BlocksSchema.find({state:'active'}).exec(function (err, result) {
       if (err) throw err;
-      // console.log(result);
+      // ////console.log(result);
       res.status(200).json({ result });
     }
     );
@@ -163,7 +163,7 @@ router.post("/remove", async (req, res) => {
 //////////
 
 router.post("/updatestate", async (req, res) => {
-  /// console.log(req.body.assessment, req.body.id)
+  /// ////console.log(req.body.assessment, req.body.id)
   await BlocksSchema.findByIdAndUpdate(
     req.body.id,
     {
@@ -173,7 +173,7 @@ router.post("/updatestate", async (req, res) => {
 
   ).exec(function (err, result) {
     if (err) throw err;
-    console.log(result);
+    ////console.log(result);
     res.status(200).json({ result });
   }
   );

@@ -25,14 +25,14 @@ router.get("/", async (req, res) => {
 router.get("/all", async (req, res) => {
   const pro = await ProfessionalSchema.find().populate('account_id','-password')  .exec( function(err, result) {
     if (err) throw err;
-    console.log(result);
+    //console.log(result);
      res.status(200).json({result});
   }
   );
 });
 
 router.post('/checkhealthpro', async function(req,res,next){
-  console.log(req.body)
+  //console.log(req.body)
 if (req.body.id!=undefined){
 
   const healthpro = await ProfessionalSchema.findOne({account_id:req.body.id,adder:req.body.adder});
@@ -48,13 +48,13 @@ if (req.body.id!=undefined){
 })
 /*  Register new Acoount*/
 router.post('/register', async function(req,res, next){
-  console.log(req.body)
+  //console.log(req.body)
  const errors = validationResult(req);
  if (!errors.isEmpty()) {
    return res.status(422).json({ errors: errors.array() });
  } else {
   //shortid.characters('0123456789012345678901234567890123456789012345678901234567890123');
-  //console.log(shortid.generate())
+  ////console.log(shortid.generate())
   const professional  = new ProfessionalSchema(
          {
              account_id: await  AccountSchema.findById(req.body.account_id) ,

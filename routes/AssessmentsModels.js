@@ -6,30 +6,30 @@ const AssessmentsModelsSchema = require("../models/AssessmentsModels");
 
 
 router.post("/id", async (req, res) => {
-  console.log(req.body.id)
+  //////console.log(req.body.id)
   const assessment = await AssessmentsModelsSchema.findById(req.body.id).exec(function (err, result) {
     if (err) throw err;
-    //console.log(result);
+    ////////console.log(result);
     res.status(200).json({ result });
   }
   );
 });
 
 router.post("/getone", async (req, res) => {
-  console.log(req.body.id)
+  //////console.log(req.body.id)
   const assessment = await AssessmentsModelsSchema.findById(req.body.id).exec(function (err, result) {
     if (err) throw err;
-    //console.log(result);
+    ////////console.log(result);
     res.status(200).json({ result });
   }
   );
 });
 
 // router.post("/delete", async (req, res) => {
-//   console.log(req.body.id)
+//   //////console.log(req.body.id)
 //   const assessment = await PatientsSchema.findById(req.body.id).exec(function (err, result) {
 //     if (err) throw err;
-//     //console.log(result);
+//     ////////console.log(result);
 //     res.status(200).json({ result });
 //   }
 //   );
@@ -53,7 +53,7 @@ router.get("/", async (req, res) => {
 router.get("/all", async (req, res) => {
   const assessment = await AssessmentsModelsSchema.find().populate('account_id', '-password').exec(function (err, result) {
     if (err) throw err;
-   // console.log(result);
+   // //////console.log(result);
     res.status(200).json({ result });
   }
   );
@@ -63,10 +63,10 @@ router.get("/all", async (req, res) => {
 
 /*  Register new Acoount*/
 router.post('/register', async function (req, res, next) {
-//console.log(req.body.zone)
+////////console.log(req.body.zone)
 
 const account= await AccountsSchema.findById(req.body.creator);
-console.log(req.body.ListBlocks)
+//////console.log(req.body.ListBlocks)
   const assessment = new AssessmentsModelsSchema(
     {
       //patient_id: await PatientsSchema.findById(req.body.patient_id),
@@ -97,12 +97,12 @@ console.log(req.body.ListBlocks)
 });
 
 router.post("/removeassessment", async (req, res) => {
- // console.log(req.body.item_id, req.body.creator)
+ // //////console.log(req.body.item_id, req.body.creator)
   await AssessmentsModelsSchema.deleteOne({ creator: req.body.creator,_id:req.body.assessment_id },).exec(async function(err, result) {
     if (err) throw err;
     const assessment = await AssessmentsModelsSchema.find().populate('account_id', '-password').exec(function (err, result) {
       if (err) throw err;
-     // console.log(result);
+     // //////console.log(result);
       res.status(200).json({ result });
     }
     );
@@ -111,7 +111,7 @@ router.post("/removeassessment", async (req, res) => {
 });
 //////////
 router.post("/update", async (req, res) => {
-  //console.log(req.body.assessment, req.body.id)
+  ////////console.log(req.body.assessment, req.body.id)
   await AssessmentsModelsSchema.findByIdAndUpdate(
     req.body.id,
     {
@@ -133,7 +133,7 @@ router.post("/update", async (req, res) => {
   
   ).exec( function(err, result) {
     if (err) throw err;
-    console.log(result);
+    //////console.log(result);
      res.status(200).json({result});
   }
   );
@@ -141,11 +141,11 @@ router.post("/update", async (req, res) => {
 
 
 router.post("/updatediags", async (req, res) => {
-  //console.log(req.body.assessment, req.body.id)
+  ////////console.log(req.body.assessment, req.body.id)
   await AssessmentsModelsSchema.updateMany({"diagnosis": req.body.olddiag}, {"$set":{"diagnosis": req.body.newdiag}}).
   exec( function(err, result) {
     if (err) throw err;
-    console.log(result);
+    //////console.log(result);
      res.status(200).json({result});
   }
   );

@@ -19,6 +19,7 @@ var blocksRouter = require('./routes/Blocks');
 var itemsRouter = require('./routes/Items');
 var componentsRouter = require('./routes/Components');
 var patientRouter=require('./routes/patients');
+var userRouter=require('./routes/Users');
 var professionalRouter=require('./routes/Professionals')
 var professionsRouter=require('./routes/Professions')
 
@@ -65,6 +66,7 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 app.use('/accounts', accountRouter);
 app.use('/patients', patientRouter);
+app.use('/users', userRouter);
 app.use('/professionals', professionalRouter);
 
 app.use('/assessments', assessmentRouter);
