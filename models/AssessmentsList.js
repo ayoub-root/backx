@@ -20,7 +20,7 @@ var AssessmentsListsSchema = new Schema(
     documentation:{type:String,default: undefined}, // link or text of the official documentation 
     audience:{type:Array}, // visibilty of each assessment ['private','organisation','public', 'specfic user']
     state:{type:String,default:'active'}, // states :['active','archive','trash', 'hidden']
-    blocks:{type:[Blocks.schema],default: undefined}, // block list used to build the assessment (0...N)
+    ListBlocks:{type:[Blocks.schema],default: undefined}, // block list used to build the assessment (0...N)
     filter:{type:Array}, // for advanced/future usage  [{filter1:{}};{filter2:{}}]
     logo:{type:String,default: undefined}, // logo of the assessment  
     background:{type:String,default: undefined},  // a background image  in case of page preview

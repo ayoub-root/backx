@@ -1,7 +1,7 @@
 var express = require('express');
 var AccountsSchema= require('../models/Accounts');
 var router = express.Router();
-const AssessmentsListsSchema = require("../models/Assessments");
+const AssessmentsListsSchema = require("../models/AssessmentsList");
 
 router.post("/id", async (req, res) => {
   //console.log(req.body.id)
@@ -81,7 +81,7 @@ const account= await AccountsSchema.findById(req.body.creator);
       documentation: req.body.documentation,
       audience: req.body.audience,
       state:req.body.state,
-      blocks:req.body.blocks,
+      ListBlocks:req.body.ListBlocks,
       created_at: Date(),
       updated_at: Date(),
     });
