@@ -1,5 +1,6 @@
 var express = require('express');
 var AccountsSchema= require('../models/Accounts');
+const AssessmentsList = require('../models/AssessmentsList');
 var router = express.Router();
 const AssessmentsListsSchema = require("../models/AssessmentsList");
 
@@ -64,7 +65,7 @@ router.post('/register', async function (req, res, next) {
 ////console.log(req.body.zone)
 
 const account= await AccountsSchema.findById(req.body.creator);
-//console.log(req.body.blocks)
+console.log(req.body.creator)
   const assessment = new AssessmentsListsSchema(
     {
       //patient_id: await PatientsSchema.findById(req.body.patient_id),
@@ -77,6 +78,7 @@ const account= await AccountsSchema.findById(req.body.creator);
       target: req.body.target,
       type:req.body.type,
       creator: await AccountsSchema.findById(req.body.creator),
+     // creator: await AccountsSchema.findById(req.body.creator),
       description: req.body.description,
       documentation: req.body.documentation,
       audience: req.body.audience,
@@ -93,6 +95,47 @@ const account= await AccountsSchema.findById(req.body.creator);
 
 });
 
+
+
+/*  Register multi assessments*/
+router.post('/registers', async function (req, res, next) {
+  let assessments=[]
+  const user =await AccountsSchema.findById(req.body.ListAssessments[0].creator)
+req.body.ListAssessments.map((data,index)=>{
+  assessments.push(
+    {
+
+      title: data.title,
+      field:data.field,
+      category: data.category,
+      topic:data.topic,
+      target: data.target,
+      type:data.type,
+      creator: user,
+     // creator: await AccountsSchema.findById(data.creator),
+      description: data.description,
+      documentation: data.documentation,
+      audience: data.audience,
+      state:data.state,
+      ListBlocks:data.ListBlocks,
+      created_at: Date(),
+      updated_at: Date(),
+    });
+  //  state = await block.save();
+  })
+    const Mblocks= AssessmentsList.insertMany(assessments).
+    then((result)=>{
+     
+      res.status(200).json({ result });
+
+    }).catch((err)=>{ if (err) throw err;})
+    
+   
+  // var etat = "not saved";
+  // if (state != null) { etat = "data saved" }
+  // res.status(200).json({ state, etat })
+
+});
 router.post("/removeassessment", async (req, res) => {
  // //console.log(req.body.item_id, req.body.creator)
   await AssessmentsListsSchema.deleteOne({ creator: req.body.creator,_id:req.body.assessment_id },).exec(async function(err, result) {

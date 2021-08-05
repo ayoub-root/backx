@@ -8,14 +8,16 @@ var AssessmentsListsSchema = new Schema(
   {
 
 
-    title: {type:String, required:true}, // asstessment title
+    title: {type:String,default: undefined }, // asstessment title
     date: {type:Date,default: undefined}, // the date when we take the assessmenet (could be modified by the creator)
     field: {type:Array, default: undefined},  // for the application services ['healthcare', 'elarning','research','fitness',]
     category: {type:Array, default: undefined},  // domaine where we use this assessment
     target: {type:Array,default: undefined}, // sub category of the assesssment
     topic:{type:String,default: undefined}, // reason  of doing this assessment like the diagnosis
     type:{type:String,required:true},  // ['evaluation','exercise','exergame','gamification','quiz','']
-    creator:{type:mongoose.Schema.Types.ObjectId, ref:'accounts'},
+      //creator:{type:mongoose.Schema.Types.ObjectId, ref:'accounts'},
+    creator: { type: mongoose.Schema.Types.ObjectId, ref: 'accounts' }, // block creator (admin or any professional) 
+   
     description:{type:String,default: undefined}, // breif description for the created assessment
     documentation:{type:String,default: undefined}, // link or text of the official documentation 
     audience:{type:Array}, // visibilty of each assessment ['private','organisation','public', 'specfic user']
