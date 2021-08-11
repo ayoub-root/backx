@@ -27,6 +27,8 @@ router.post('/register', async function (req, res, next) {
     {
 
       creator: await AccountsSchema.findById(req.body.creator),
+      elementID:req.body.elementID,
+     
       title: req.body.title,
       label: req.body.label,
       field: req.body.field,

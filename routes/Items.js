@@ -26,6 +26,7 @@ router.post('/register', async function (req, res, next) {
     {
 
       creator: await AccountsSchema.findById(req.body.creator),
+      elementID:req.body.elementID,
       title: req.body.title,
       label: req.body.label,
       field: req.body.field,
@@ -55,12 +56,14 @@ router.post('/register', async function (req, res, next) {
 /*  Register new blocks*/
 router.post('/registers', async function (req, res, next) {
   let items=[]
-  const user =await AccountsSchema.findById(req.body.ListItems[0].creator)
-req.body.ListItems.map((data,index)=>{
+  const user =await AccountsSchema.findById(req.body.creator)
+ // console.log(JSON.stringify(req.body.ListItems))
+req.body.ListItems.map(async(data,index)=>{
   items.push(
     {
-
+   //  _id:data._id,
       creator: user,
+      elementID:data.elementID,
       title: data.title,
       label: data.label,
       field: data.field,
@@ -82,6 +85,7 @@ req.body.ListItems.map((data,index)=>{
     });
   //  state = await block.save();
   })
+  console.log(JSON.stringify(items))
     const MItems= ItemsSchema.insertMany(items).
     then((result)=>{
      
@@ -117,7 +121,8 @@ router.post("/update", async (req, res) => {
   /// //console.log(req.body.assessment, req.body.id)
   await ItemsSchema.findByIdAndUpdate(
     req.body.id,
-    {
+    { 
+      elementID:req.body.elementID,
       title: req.body.title,
       label: req.body.lable,
       field: req.body.filed,

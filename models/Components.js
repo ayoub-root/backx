@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 var ComponentsSchema = new Schema(
   {
+    elementID:{type:String,default:undefined}, // uuid v4  customized id 
 //account_id :{type:mongoose.Schema.Types.ObjectId, ref:'accounts'},
 //evaluation:{type:mongoose.Schema.Types.ObjectId, ref:'evaluations'},
 creator:{type:mongoose.Schema.Types.ObjectId, ref:'accounts'},

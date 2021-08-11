@@ -25,7 +25,7 @@ router.post('/register', async function (req, res, next) {
 
   const block = new BlocksSchema(
     {
-
+      elementID:req.body.elementID,
       title: req.body.title,
       label: req.body.label,
       field: req.body.field,
@@ -55,11 +55,11 @@ router.post('/register', async function (req, res, next) {
 /*  Register new blocks*/
 router.post('/registers', async function (req, res, next) {
   let blocks=[]
-  const user =await AccountsSchema.findById(req.body.ListBlocks[0].creator)
+  const user =await AccountsSchema.findById(req.body.creator)
 req.body.ListBlocks.map((data,index)=>{
   blocks.push(
     {
-
+      elementID:data.elementID,
       title: data.title,
       label: data.label,
       field: data.field,

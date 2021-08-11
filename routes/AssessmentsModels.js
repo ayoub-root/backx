@@ -71,7 +71,7 @@ const account= await AccountsSchema.findById(req.body.creator);
     {
       //patient_id: await PatientsSchema.findById(req.body.patient_id),
       //date: req.body.date,
-      
+      elementID:req.body.elementID,
       title: req.body.title,
       field:req.body.field,
       category: req.body.category,
@@ -88,11 +88,11 @@ const account= await AccountsSchema.findById(req.body.creator);
       created_at: Date(),
       updated_at: Date(),
     });
-  state = await assessment.save();
+  result = await assessment.save();
  
   var etat = "not saved";
-  if (state != null) { etat = "data saved" }
-  res.status(200).json({ state, etat })
+  if (result != null) { etat = "data saved" }
+  res.status(200).json({ result, etat })
 
 });
 

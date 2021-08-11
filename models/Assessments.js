@@ -7,7 +7,7 @@ const Schema = mongoose.Schema;
 var AssessmentsSchema = new Schema(
   {
 
-
+    elementID:{type:String}, // uuid v4  customized id 
 title: {type:String, required:true},
 category: {type:Array, required:true},
 desease: {type:Array, required:true},

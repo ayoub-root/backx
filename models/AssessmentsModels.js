@@ -9,7 +9,7 @@ const Schema = mongoose.Schema;
 var AssessmentsModelsSchema = new Schema(
   {
 
-
+    elementID:{type:String}, // uuid v4  customized id 
 title: {type:String, required:true}, // asstessment title
 date: {type:Date,default: undefined}, // the date when we take the assessmenet (could be modified by the creator)
 field: {type:Array, default: undefined},  // for the application services ['healthcare', 'elarning','research','fitness',]

@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 
 var ItemsSchema = new Schema(
   {
+    elementID:{type:String}, // uuid v4  customized id 
 creator:{type:mongoose.Schema.Types.ObjectId, ref:'accounts'},
 title:{type:String,required:true},
 label:{type:String},
@@ -15,7 +16,7 @@ bodyzone:{type: Array,default: undefined},
 profession:{type:Array,default: undefined},
 type:{ type: Array,default: undefined },
 state:{type:String,default:'active'},
-valid:{type:String, default:'user'}, // requires te be validated by the admin
+valid:{type:String, default:undefined}, // requires te be validated by the admin
 audience:{type:Array,default: undefined},
 clonable:{type:Boolean,default:true,required:false},
 documentation:{type:String,default: undefined},

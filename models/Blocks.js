@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 
 var BlocksSchema = new Schema(
   {
+    elementID:{type:String}, // uuid v4  customized id 
     title: { type: String, required: true }, //the block name
     label:{type:String},  //le block label, when user wants to change it 
     field: {type:Array, default: undefined},  //
@@ -17,7 +18,7 @@ var BlocksSchema = new Schema(
     target: { type: Array, default: undefined},
     profession:{type:Array,default: undefined},
     state:{type:String,default:'active'},
-    valid:{type:String, default:'user'}, // requires te be validated by the admin
+    valid:{type:String, default:undefined}, // requires te be validated by the admin
     audience: { type: Array,default: undefined },
     documentation:{type:String,default: undefined},
     description: { type: String,default: undefined },

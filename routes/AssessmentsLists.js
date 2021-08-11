@@ -70,7 +70,7 @@ console.log(req.body.creator)
     {
       //patient_id: await PatientsSchema.findById(req.body.patient_id),
       //date: req.body.date,
-      
+      elementID:req.body.elementID,
       title: req.body.title,
       field:req.body.field,
       category: req.body.category,
@@ -104,7 +104,7 @@ router.post('/registers', async function (req, res, next) {
 req.body.ListAssessments.map((data,index)=>{
   assessments.push(
     {
-
+      elementID:data.elementID,
       title: data.title,
       field:data.field,
       category: data.category,
