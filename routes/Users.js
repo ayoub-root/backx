@@ -21,7 +21,7 @@ const { db } = require('../models/Assessments');
 // });
 
 router.get("/", async (req, res) => {
-  const user = await UserSchema.find().populate('accounts');
+  const user = await UserSchema.find().populate('accounts').populate('assessments');
   res.status(200).json(user);
 });
 router.get("/all", async (req, res) => {
@@ -44,8 +44,10 @@ router.post("/diagno", async (req, res) => {
   );
 });
 router.post("/assessmentslist", async (req, res) => {
-  ////console.log(req.body.id)
-  const user = await UserSchema.findById(req.body.id,'_id assessments').populate('assessmentslist').exec( function(err, result) {
+  console.log(req.body.id)
+  const user = await UserSchema.findById(req.body.id,'_id assessments').populate("assessments"
+   // {path:'assessmentslist',select:'_id'}
+    ).exec( function(err, result) {
     if (err) throw err;
    // //console.log(result);
      res.status(200).json({result});

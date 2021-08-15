@@ -3,6 +3,7 @@ var AccountsSchema= require('../models/Accounts');
 const AssessmentsList = require('../models/AssessmentsList');
 var router = express.Router();
 const AssessmentsListsSchema = require("../models/AssessmentsList");
+var UserSchema = require('../models/Users');
 
 router.post("/id", async (req, res) => {
   //console.log(req.body.id)
@@ -88,6 +89,16 @@ console.log(req.body.creator)
       updated_at: Date(),
     });
   state = await assessment.save();
+  await UserSchema.findByIdAndUpdate(
+    req.body.id,
+    { $push: { assessments: state._id } },
+    { new: true, useFindAndModify: false }
+  ).populate('assessments').exec( function(err, result) {
+    if (err) throw err;
+    //console.log(result);
+     res.status(200).json({result});
+  }
+  );
  
   var etat = "not saved";
   if (state != null) { etat = "data saved" }
@@ -125,11 +136,31 @@ req.body.ListAssessments.map((data,index)=>{
   })
     const Mblocks= AssessmentsList.insertMany(assessments).
     then((result)=>{
-     
+     console.log(result)
       res.status(200).json({ result });
+       UserSchema.findByIdAndUpdate(
+          req.body.userid,
+          { $push: { assessments: result.map((e)=>e._id) } },
+          { new: true, useFindAndModify: false }
+        ).populate('assessmentslist').exec( function(err, result) {
+          if (err) throw err;
+          //console.log(result);
+          // res.status(200).json({result});
+          
+        }
+        );
 
     }).catch((err)=>{ if (err) throw err;})
-    
+    // await UserSchema.findByIdAndUpdate(
+    //   req.body.id,
+    //   { $push: { assessments: state._id } },
+    //   { new: true, useFindAndModify: false }
+    // ).populate('assessments').exec( function(err, result) {
+    //   if (err) throw err;
+    //   //console.log(result);
+    //    res.status(200).json({result});
+    // }
+    // );
    
   // var etat = "not saved";
   // if (state != null) { etat = "data saved" }

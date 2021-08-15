@@ -42,6 +42,6 @@ BlocksSchema
   .get(function () {
     return '/Blocks/' + this._id;
   });
-
+  
 //Export model
 module.exports = mongoose.model('blocks', BlocksSchema);
