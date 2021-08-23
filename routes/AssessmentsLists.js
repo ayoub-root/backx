@@ -116,6 +116,7 @@ req.body.ListAssessments.map((data,index)=>{
   assessments.push(
     {
       elementID:data.elementID,
+      date:data.date,
       title: data.title,
       field:data.field,
       category: data.category,
